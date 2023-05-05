@@ -28,4 +28,9 @@ public class GameController {
     public ResponseEntity<Integer> playDices(){
         return ResponseEntity.status(HttpStatus.OK).body(gameService.playDices());
     }
+
+    @GetMapping("/divideCards")
+    public ResponseEntity<List<List<Card>>> divideCards(){
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.divideCards());
+    }
 }
