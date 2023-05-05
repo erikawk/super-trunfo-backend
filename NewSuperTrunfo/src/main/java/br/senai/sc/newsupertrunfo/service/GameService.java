@@ -38,8 +38,12 @@ public class GameService {
         return random.nextInt(1, 6);
     }
 
-    public Player checkWinner(){
-        if (playerService.findAllPlayers() )
+    public Player checkWinner() {
+        List<Card> listCardsPC = divideCards().get(0);
+        List<Card> listCardsPlayer = divideCards().get(1);
+        Integer assortedNumber = playDices();
+         // saber como fazer essa verificação 
+        return null;
     }
 
 }

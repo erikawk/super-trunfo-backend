@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CardDTO {
     @NotNull
-    private String race;
+//    private String race;
     @NotNull
     private Integer expLife;
     @NotNull
-    private Double weight, height, price;
+    private Integer weight, height, price;
 
 }
