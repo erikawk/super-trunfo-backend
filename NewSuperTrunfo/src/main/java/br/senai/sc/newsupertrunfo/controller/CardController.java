@@ -16,6 +16,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/card")
+@CrossOrigin
 public class CardController {
 
     private CardService cardService;
