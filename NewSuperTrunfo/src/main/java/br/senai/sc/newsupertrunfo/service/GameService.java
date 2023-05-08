@@ -42,7 +42,7 @@ public class GameService {
         List<Card> listCardsPC = divideCards().get(0);
         List<Card> listCardsPlayer = divideCards().get(1);
         Integer assortedNumber = playDices();
-         // saber como fazer essa verificação 
+         // saber como fazer essa verificação
         return null;
     }
 
