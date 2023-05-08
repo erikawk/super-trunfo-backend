@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +16,9 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer cod;
-    private String race;
+//    private String race;
     private Integer expLife;
-    private Double weight, height, price;
+    private Integer weight, height, price;
+
 
 }
