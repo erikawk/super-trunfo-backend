@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/card")
+@CrossOrigin
 public class CardController {
 
     private CardService cardService;
