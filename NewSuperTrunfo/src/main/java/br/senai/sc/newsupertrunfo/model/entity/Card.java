@@ -16,7 +16,7 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer cod;
-//    private String race;
+    private String race;
     private Integer expLife;
     private Integer weight, height, price;
 

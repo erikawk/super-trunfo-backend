@@ -16,7 +16,6 @@ import java.util.Random;
 public class GameService {
 
     private CardService cardService;
-    private PlayerService playerService;
 
     public List<Card> shuffleCards() {
         List<Card> cards = cardService.findAll();
@@ -25,7 +24,7 @@ public class GameService {
     }
 
     public List<List<Card>> divideCards() {
-        List<Card> listCardsPC = shuffleCards().subList(0, 2);
+        List<Card> listCardsPC = shuffleCards().    subList(0, 2);
         List<Card> listCardsPlayer = shuffleCards().subList(2, 4);
 
         List<List<Card>> packCards = new ArrayList<>();
@@ -38,12 +37,34 @@ public class GameService {
         return random.nextInt(1, 6);
     }
 
-    public Player checkWinner() {
-        List<Card> listCardsPC = divideCards().get(0);
-        List<Card> listCardsPlayer = divideCards().get(1);
-        Integer assortedNumber = playDices();
-         // saber como fazer essa verificação
-        return null;
+    public Integer featureAssorted(Integer i) {
+        List<Card> listCards = divideCards().get(i);
+        Integer numberAssorted = playDices();
+
+        for (int j = 0; j < listCards.size(); j++) {
+            switch (numberAssorted) {
+                case 1 -> {
+                    return listCards.get(j).getExpLife();
+                }
+                case 2 -> {
+                    return listCards.get(j).getWeight();
+                }
+                case 3 -> {
+                    return listCards.get(j).getHeight();
+                }
+                case 4 -> {
+                    return listCards.get(j).getPrice();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public String checkWinner() {
+        if(featureAssorted(0) > featureAssorted( 1)){
+             return "voce perdeu";
+        }
+        return "voce ganhou";
     }
 
 }

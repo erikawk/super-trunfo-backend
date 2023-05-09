@@ -33,4 +33,9 @@ public class GameController {
     public ResponseEntity<List<List<Card>>> divideCards(){
         return ResponseEntity.status(HttpStatus.OK).body(gameService.divideCards());
     }
+
+    @GetMapping("/checkWinner")
+    public ResponseEntity<String> checkWinner(){
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.checkWinner());
+    }
 }
