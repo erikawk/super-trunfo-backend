@@ -36,7 +36,7 @@ public class CardTestApi {
     @Test
     public void testCreate() throws Exception {
 
-        Card card = new Card(1, "Poodle", 10, 10.0, 10.0, 10.0);
+        Card card = new Card(1, "Poodle", 10, 10, 10, 10);
 
         String url = "/card/post";
 
@@ -74,7 +74,7 @@ public class CardTestApi {
 
         String url = "/card/edit/{cod}";
         Integer cod = 1;
-        Card cardUpdated = new Card(1, "poodle", 11, 11.0, 11.0, 11.0);
+        Card cardUpdated = new Card(1, "poodle", 11, 11, 11, 11);
         String requestBody = objectMapper.writeValueAsString(cardUpdated);
 
         when(cardService.findCard(cod)).thenReturn(cardUpdated);
