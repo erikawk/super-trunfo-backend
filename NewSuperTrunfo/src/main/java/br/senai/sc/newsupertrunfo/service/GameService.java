@@ -24,47 +24,48 @@ public class GameService {
     }
 
     public List<List<Card>> divideCards() {
-        List<Card> listCardsPC = shuffleCards().    subList(0, 2);
+        List<Card> listCardsPC = shuffleCards().subList(0, 2);
         List<Card> listCardsPlayer = shuffleCards().subList(2, 4);
 
-        List<List<Card>> packCards = new ArrayList<>();
-        Collections.addAll(packCards, listCardsPC, listCardsPlayer);
-        return packCards;
+//        List<List<Card>> packCards = new ArrayList<>();
+//        Collections.addAll(packCards, listCardsPC, listCardsPlayer);
+        return List.of(listCardsPC, listCardsPlayer);
     }
 
     public Integer playDices() {
         Random random = new Random();
-        return random.nextInt(1, 6);
+        return random.nextInt((4 - 1) + 1) + 1;
     }
 
-    public Integer featureAssorted(Integer i) {
-        List<Card> listCards = divideCards().get(i);
+    public List<Integer> featureAssorted() {
+        List<Card> listCardsPC = divideCards().get(0);
+        List<Card> listCardsPlayer = divideCards().get(1);
         Integer numberAssorted = playDices();
 
-        for (int j = 0; j < listCards.size(); j++) {
+        for (int i = 0; i < listCardsPC.size(); i++) {
             switch (numberAssorted) {
                 case 1 -> {
-                    return listCards.get(j).getExpLife();
+                    return List.of(listCardsPC.get(i).getExpLife(), listCardsPlayer.get(i).getExpLife());
                 }
                 case 2 -> {
-                    return listCards.get(j).getWeight();
+                    return List.of(listCardsPC.get(i).getWeight(), listCardsPlayer.get(i).getWeight());
                 }
                 case 3 -> {
-                    return listCards.get(j).getHeight();
+                    return List.of(listCardsPC.get(i).getHeight(), listCardsPlayer.get(i).getHeight());
                 }
                 case 4 -> {
-                    return listCards.get(j).getPrice();
+                    return List.of(listCardsPC.get(i).getPrice(), listCardsPlayer.get(i).getPrice());
                 }
             }
         }
-        return 0;
+        throw new IllegalArgumentException();
     }
 
     public String checkWinner() {
-        if(featureAssorted(0) > featureAssorted( 1)){
-             return "voce perdeu";
+        if (featureAssorted().get(0) > featureAssorted().get(1)) {
+            return "vocÊ perdeu";
         }
-        return "voce ganhou";
+        return "vocÊ ganhou";
     }
 
 }
