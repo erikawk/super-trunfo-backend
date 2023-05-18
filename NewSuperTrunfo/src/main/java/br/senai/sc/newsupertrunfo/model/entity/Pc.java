@@ -5,18 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_card")
-@Entity
-public class Card {
+@Data
+public class Pc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer cod;
-    private String race;
-    private Integer expLife;
-    private Integer weight, height, price;
+    private Integer idPc;
+
+    @OneToMany
+    @JoinColumn(name = "id_pc")
+    private List<Card> listCardsPc;
 }

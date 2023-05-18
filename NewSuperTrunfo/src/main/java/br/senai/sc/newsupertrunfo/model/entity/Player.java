@@ -20,5 +20,5 @@ public class Player{
     private String name;
     @OneToMany
     @JoinColumn(name = "id_player")
-    private List<Card> cards;
+    private List<Card> listCardsPlayer;
 }

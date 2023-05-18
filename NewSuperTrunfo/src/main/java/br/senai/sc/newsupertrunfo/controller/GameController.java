@@ -1,8 +1,11 @@
 package br.senai.sc.newsupertrunfo.controller;
 
 import br.senai.sc.newsupertrunfo.model.entity.Card;
+import br.senai.sc.newsupertrunfo.model.entity.Pc;
+import br.senai.sc.newsupertrunfo.model.entity.Player;
 import br.senai.sc.newsupertrunfo.service.CardService;
 import br.senai.sc.newsupertrunfo.service.GameService;
+import br.senai.sc.newsupertrunfo.service.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,7 @@ import java.util.List;
 @CrossOrigin
 public class GameController {
     private GameService gameService;
+    private PlayerService playerService;
 
     @GetMapping("/shuffle")
     public ResponseEntity<List<Card>> shuffleCards(){
@@ -30,8 +34,11 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.playDices());
     }
 
-    @GetMapping("/divideCards")
-    public ResponseEntity<List<List<Card>>> divideCards(){
+    @GetMapping("/divideCards/{idPlayer}")
+    public ResponseEntity<List<List<Card>>> divideCards(@PathVariable Integer idPlayer){
+        Player player = playerService.findOnePlayer(idPlayer).orElseThrow();
+        player.setListCardsPlayer(gameService.divideCards().get(1));
+        playerService.savePlayer(player);
         return ResponseEntity.status(HttpStatus.OK).body(gameService.divideCards());
     }
 

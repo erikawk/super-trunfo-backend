@@ -26,12 +26,14 @@ public class CardService {
         return cardRepository.findById(cod).orElseThrow();
     }
 
+    public Card findCardPlayer (Integer idPlayer){
+        return cardRepository.findById(idPlayer).get();
+    }
     public Card deleteCard(Integer cod){
         Card card = findCard(cod);
         cardRepository.deleteById(cod);
         return card;
     }
-
     public Card editCard(Card card){
         return cardRepository.save(card);
     }

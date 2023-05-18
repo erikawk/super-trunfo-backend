@@ -49,4 +49,9 @@ public class CardController {
         return  ResponseEntity.status(HttpStatus.OK).body(cardService.findCard(cod));
     }
 
+    @GetMapping("/get/{idPlayer}")
+    public ResponseEntity<Card> findCardPlayer(@PathVariable Integer idPlayer){
+        return  ResponseEntity.status(HttpStatus.OK).body(cardService.findCardPlayer(idPlayer));
+    }
+
 }
