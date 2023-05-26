@@ -5,6 +5,7 @@ import br.senai.sc.newsupertrunfo.service.CardService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +41,8 @@ public class CardController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<Card>> findAll(){
-        return ResponseEntity.status(HttpStatus.OK).body(cardService.findAll());
+    public ResponseEntity<Page<Card>> findAll(@RequestParam int page, @RequestParam int size){
+        return ResponseEntity.status(HttpStatus.OK).body(cardService.findAll(page, size));
     }
 
     @GetMapping("/get/{cod}")

@@ -17,7 +17,6 @@ import java.util.Random;
 public class GameService {
 
     private CardService cardService;
-    private PlayerService playerService;
 
     public List<Card> shuffleCards() {
         List<Card> cards = cardService.findAll();

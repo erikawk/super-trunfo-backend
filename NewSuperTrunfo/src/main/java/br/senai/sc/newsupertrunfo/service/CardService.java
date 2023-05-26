@@ -3,10 +3,12 @@ package br.senai.sc.newsupertrunfo.service;
 import br.senai.sc.newsupertrunfo.model.entity.Card;
 import br.senai.sc.newsupertrunfo.repository.CardRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -16,6 +18,11 @@ public class CardService {
 
     public Card createCard(Card card) {
         return cardRepository.save(card);
+    }
+
+    public Page<Card> findAll(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return cardRepository.findAll(pageable);
     }
 
     public List<Card> findAll(){
