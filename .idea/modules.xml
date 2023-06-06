@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NewSuperTrunfo/NewSuperTrunfo.iml" filepath="$PROJECT_DIR$/NewSuperTrunfo/NewSuperTrunfo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/super-trunfo-backend.iml" filepath="$PROJECT_DIR$/.idea/super-trunfo-backend.iml" />
     </modules>
   </component>
