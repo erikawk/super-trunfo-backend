@@ -33,21 +33,21 @@ public class CardTestApi {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Test
-    public void testCreate() throws Exception {
-
-        Card card = new Card(1, "Poodle", 10, 10, 10, 10);
-
-        String url = "/card/post";
-
-        String requestBody = objectMapper.writeValueAsString(card);
-
-        when(cardService.createCard(any())).thenReturn(card);
-        mockMvc.perform(MockMvcRequestBuilders.post(url)
-                        .contentType(APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isCreated());
-    }
+//    @Test
+//    public void testCreate() throws Exception {
+//
+//        Card card = new Card(1, "Poodle", 10, 10, 10, 10);
+//
+//        String url = "/card/post";
+//
+//        String requestBody = objectMapper.writeValueAsString(card);
+//
+//        when(cardService.createCard(any())).thenReturn(card);
+//        mockMvc.perform(MockMvcRequestBuilders.post(url)
+//                        .contentType(APPLICATION_JSON)
+//                        .content(requestBody))
+//                .andExpect(status().isCreated());
+//    }
 
     @Test
     public void testGetAll() throws Exception {

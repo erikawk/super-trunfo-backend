@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +78,11 @@ public class ImageController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(imageUrls);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Image> findImage(@PathVariable Long id){
+        return ResponseEntity.ok(imageService.findImage(id));
     }
 
     private String generatePresignedUrl(String keyName) {

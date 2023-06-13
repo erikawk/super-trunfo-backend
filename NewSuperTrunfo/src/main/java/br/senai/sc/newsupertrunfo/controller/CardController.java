@@ -21,11 +21,11 @@ import java.util.Optional;
 public class CardController {
     private CardService cardService;
 
-    @PostMapping("/post")
-    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO) {
+    @PostMapping("/post/{idImg}")
+    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO, @PathVariable Long idImg) {
         Card card = new Card();
         BeanUtils.copyProperties(cardDTO, card);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cardService.createCard(card));
+        return ResponseEntity.status(HttpStatus.CREATED).body(cardService.createCard(card, idImg));
     }
 
     @DeleteMapping("/delete/{cod}")
@@ -47,7 +47,7 @@ public class CardController {
 
     @GetMapping("/get/{cod}")
     public ResponseEntity<Card> findCard(@PathVariable Integer cod){
-        return  ResponseEntity.status(HttpStatus.OK).body(cardService.findCard(cod));
+        return ResponseEntity.status(HttpStatus.OK).body(cardService.findCard(cod));
     }
 
     @GetMapping("/get/{idPlayer}")

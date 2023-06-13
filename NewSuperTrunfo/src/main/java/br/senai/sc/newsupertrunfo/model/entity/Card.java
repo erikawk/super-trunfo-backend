@@ -19,4 +19,7 @@ public class Card {
     private String race;
     private Integer expLife;
     private Integer weight, height, price;
+
+    @OneToOne
+    private Image image;
 }

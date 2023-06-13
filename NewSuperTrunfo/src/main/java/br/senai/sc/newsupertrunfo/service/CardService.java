@@ -1,6 +1,7 @@
 package br.senai.sc.newsupertrunfo.service;
 
 import br.senai.sc.newsupertrunfo.model.entity.Card;
+import br.senai.sc.newsupertrunfo.model.entity.Image;
 import br.senai.sc.newsupertrunfo.repository.CardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,8 +16,10 @@ import java.util.List;
 public class CardService {
 
     private CardRepository cardRepository;
+    private ImageService imageService;
 
-    public Card createCard(Card card) {
+    public Card createCard(Card card, Long idImage) {
+        card.setImage(imageService.findImage(idImage));
         return cardRepository.save(card);
     }
 
