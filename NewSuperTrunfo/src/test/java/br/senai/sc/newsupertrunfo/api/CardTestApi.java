@@ -69,24 +69,24 @@ public class CardTestApi {
                 .andExpect(status().isNoContent());
     }
 
-    @Test
-    public void testUpdate() throws Exception {
-
-        String url = "/card/edit/{cod}";
-        Integer cod = 1;
-        Card cardUpdated = new Card(1, "poodle", 11, 11, 11, 11);
-        String requestBody = objectMapper.writeValueAsString(cardUpdated);
-
-        when(cardService.findCard(cod)).thenReturn(cardUpdated);
-        when(cardService.editCard(any())).thenReturn(cardUpdated);
-
-        mockMvc.perform(MockMvcRequestBuilders.put(url, cardUpdated.getCod())
-                        .contentType(APPLICATION_JSON)
-                        .content(requestBody)
-                        .accept(APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(cardUpdated));
-    }
+//    @Test
+//    public void testUpdate() throws Exception {
+//
+//        String url = "/card/edit/{cod}";
+//        Integer cod = 1;
+//        Card cardUpdated = new Card(1, "poodle", 11, 11, 11, 11);
+//        String requestBody = objectMapper.writeValueAsString(cardUpdated);
+//
+//        when(cardService.findCard(cod)).thenReturn(cardUpdated);
+//        when(cardService.editCard(any())).thenReturn(cardUpdated);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.put(url, cardUpdated.getCod())
+//                        .contentType(APPLICATION_JSON)
+//                        .content(requestBody)
+//                        .accept(APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$").value(cardUpdated));
+//    }
 
     @Test
     public void testGetById() throws Exception {

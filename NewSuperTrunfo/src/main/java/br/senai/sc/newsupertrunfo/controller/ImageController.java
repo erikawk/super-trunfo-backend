@@ -23,6 +23,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -54,7 +55,7 @@ public class ImageController {
 
             BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
 
-            ImageDTO imageDTO = new ImageDTO(keyName);
+            ImageDTO imageDTO = new ImageDTO(UUID.randomUUID().toString(), keyName);
             Image image = new Image();
             BeanUtils.copyProperties(imageDTO, image);
             imageService.addImage(image);
@@ -81,8 +82,8 @@ public class ImageController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Image> findImage(@PathVariable Long id){
-        return ResponseEntity.ok(imageService.findImage(id));
+    public ResponseEntity<String> findImage(@PathVariable String keyName){
+        return ResponseEntity.ok(generatePresignedUrl(keyName));
     }
 
     private String generatePresignedUrl(String keyName) {
