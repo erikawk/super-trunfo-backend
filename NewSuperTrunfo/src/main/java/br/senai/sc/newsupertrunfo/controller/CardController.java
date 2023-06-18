@@ -22,7 +22,7 @@ public class CardController {
     private CardService cardService;
 
     @PostMapping("/post/{idImg}")
-    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO, @PathVariable Long idImg) {
+    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO, @PathVariable String idImg) {
         Card card = new Card();
         BeanUtils.copyProperties(cardDTO, card);
         return ResponseEntity.status(HttpStatus.CREATED).body(cardService.createCard(card, idImg));

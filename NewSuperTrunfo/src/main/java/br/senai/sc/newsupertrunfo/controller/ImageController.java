@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,68 +52,38 @@ public class ImageController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Image> addImage(@RequestBody MultipartFile file) {
-
-        try {
-            String bucketName = "bucket-romario";
-            String keyName = "imageTest";
-
-            BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
-
-            ImageDTO imageDTO = new ImageDTO(UUID.randomUUID().toString(), keyName);
-            Image image = new Image();
-            BeanUtils.copyProperties(imageDTO, image);
-            imageService.addImage(image);
-
-            AmazonS3Client amazonS3Client = (AmazonS3Client) AmazonS3ClientBuilder.standard()
-                    .withRegion(Regions.US_EAST_1)
-                    .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
-                    .build();
-
-            amazonS3Client.putObject(new PutObjectRequest(bucketName, keyName, file.getInputStream(), null));
-        } catch (Exception e) {
+    public ResponseEntity<Image> addImage(@RequestParam(name = "file") MultipartFile multipartFile) {
+        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        try(FileOutputStream fileOutputStream = new FileOutputStream(file)){
+            fileOutputStream.write(multipartFile.getBytes());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ImageDTO imageDTO = new ImageDTO(UUID.randomUUID().toString(), file.getName());
+        Image image = new Image();
+        BeanUtils.copyProperties(imageDTO, image);
+        try{
+            return ResponseEntity.ok(imageService.addImage(image, file));
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<String>> findImages() {
-        List<String> imageUrls = imageService.findImages().stream()
-                .map(image -> generatePresignedUrl(image.getKeyName()))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(imageUrls);
+    public ResponseEntity<List<URL>> findImages(){
+        return ResponseEntity.ok(imageService.findImages());
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<String> findImage(@PathVariable String keyName){
-        return ResponseEntity.ok(generatePresignedUrl(keyName));
+    @GetMapping("/get/{keyName}")
+    public ResponseEntity<URL> findImage(@PathVariable String keyName){
+        return ResponseEntity.ok(imageService.findImage(keyName));
     }
 
-    private String generatePresignedUrl(String keyName) {
-        try {
-            BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
 
-            AmazonS3Client amazonS3Client = (AmazonS3Client) AmazonS3ClientBuilder.standard()
-                    .withRegion(Regions.US_EAST_1)
-                    .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
-                    .build();
-            String bucketName = "bucket-romario";
 
-            if (amazonS3Client.doesBucketExist(bucketName)) {
-                URL url = amazonS3Client.generatePresignedUrl(bucketName, keyName, DateTime
-                        .now()
-                        .plusDays(1)
-                        .toDate());
-                return url.toString();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 
 }

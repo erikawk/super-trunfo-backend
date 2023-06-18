@@ -1,5 +1,6 @@
 package br.senai.sc.newsupertrunfo.model.dto;
 
+import br.senai.sc.newsupertrunfo.model.entity.Image;
 import br.senai.sc.newsupertrunfo.model.entity.Player;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,5 +17,7 @@ public class CardDTO {
     private Integer expLife;
     @NotNull
     private Integer weight, height, price;
+
+    private Image image;
 
 }

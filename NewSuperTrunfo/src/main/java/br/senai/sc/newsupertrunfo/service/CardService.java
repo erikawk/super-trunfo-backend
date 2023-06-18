@@ -18,8 +18,8 @@ public class CardService {
     private CardRepository cardRepository;
     private ImageService imageService;
 
-    public Card createCard(Card card, Long idImage) {
-        card.setImage(imageService.findImage(idImage));
+    public Card createCard(Card card, String idImage) {
+        card.setImage(imageService.findOne(idImage));
         return cardRepository.save(card);
     }
 
