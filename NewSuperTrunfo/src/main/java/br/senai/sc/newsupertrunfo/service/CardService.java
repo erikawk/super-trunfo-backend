@@ -21,12 +21,10 @@ public class CardService {
         card.setImage(imageService.findImg(idImage));
         return cardRepository.save(card);
     }
-
     public Page<Card> findAll(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return cardRepository.findAll(pageable);
     }
-
     public List<Card> findAll(){
         return cardRepository.findAll();
     }
